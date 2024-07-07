@@ -1,0 +1,61 @@
+Ichou Aymane
+------------------------ 
+EXO 1 
+
+
+1.Il y a une clé publique et une privé, chacune permet d'encoder/déchiffrer l'autre. 
+  Elle fonctionne par paire. Les cles d'une autre paire de permettront pas de déchiffrer un message encrypté par une enieme paire. 
+
+2. p et q doivent etre egales à "bits / 2"
+	
+ 
+4. Les conditions pour générer e sont : e premier avec phi(𝑛) et strictement inférieur à phi(𝑛)
+ 
+5. Pour generer d il faut : d inverse de e modulo phi(𝑛) et strictement inférieur à phi(𝑛). 
+
+
+------------------------
+EXO 2
+
+1. a.Bob doit utiliser doit utiliser la clé publique d'alice pour lui envoyer un message 
+   b.Alice doit utiliser sa clé privé 
+  
+2. Chiffrement par bob , calcul du chiffré : c = m**e mod n  
+   Dechiffrement par Alice, dechifrrement :  m = c**d mod n 
+   
+------------------------
+EXO 3 
+Quelle clef doit utiliser Bob pour signer un message ?
+Il doit utiliser sa clé privé 
+
+Quelle clef doit utiliser Alice pour vérifier l’authenticité du message qui prétend être signé par Bob ?
+Elle doit utilisé la clé publique de bob 
+
+
+Quelle est la procédure de signature et quelle est la forme du message signé ?
+
+"Pour assurer l’authenticité d’un message, son émetteur peut utiliser RSA pour le signer.
+Pour cela il lui suffit de chiffrer un condensé (un hash) du message avec sa clef privée :
+𝑠 = 𝐻(𝑚)𝑑 mod 𝑛.
+Le message signé est alors (𝑚, 𝑠)."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
