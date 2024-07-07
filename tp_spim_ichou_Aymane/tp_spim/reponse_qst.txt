@@ -1,0 +1,87 @@
+Ichou Aymane 
+
+Exercice 0 
+
+1.Afficher tous les registres -> print all_regs 
+
+2.L'instruction jal (jump and link) est effectué avec le main. 
+
+6. Il ne se passe rien lorsque de la seconde execution de la commande run. 
+
+7a. Cela m'affiche cette erreur : (parser) Label is defined for the second time on line 4 of file basic.s
+7b. 
+  nop                 : Rien
+  li $t0, 42		  : dans le registre t0, on affecte 42 (on fait un or de 0 et 42)
+  li $t1, 9			  : dans le registre t1, on affecte 9 
+  add $t2, $t0, $t1   : On additionne t0 et t1, et on affecte le resultat a t2
+  move $a0, $t2	      : Copie t2 dans a0
+  li $v0, 1		      : Met 1 dans v0 
+  syscall			  : Appel print
+  jr $ra
+
+
+Exercice 1 
+
+2.
+
+li $v0, 5          On met 5 dans v0 qui permet de read int 
+  syscall		   On fait un appel systeme qui demande au user d'entrer un entier, directement stocké dans v0
+  move $t0, $v0	   On copie v0 dans t0
+
+3.
+
+Je constate que le programme fait la même chose que "add.s", cependant il ne se termine pas. 
+La ligne de commande ne réapparait pas.  
+
+
+4.Ce comportement est dû au dernier appel du registre d'adresse. 
+
+Explication du programme loop: 
+
+add_user_num:
+  li $v0, 4
+  la $a0, num1q   Affiche "Please enter a first number:
+  syscall
+
+  li $v0, 5
+  syscall         Attend que l'utilisateur entre un int, et met la valeur dans t0 
+  move $t0, $v0
+  
+  li $v0, 4
+  la $a0, num2q   Affiche "Please enter a second number: "
+  syscall
+
+  li $v0, 5
+  syscall         Attend que l'utilisateur entre un int, et met la valeur dans t1
+  move $t1, $v0
+
+  li $v0, 4
+  la $a0, sum     Affiche "The sum of these numbers is: "
+  syscall
+
+  add $a0, $t0, $t1
+  li $v0, 1        Fais l'addition, et mets le resultats dans a0, affiche un entier 
+  syscall
+
+  li $v0, 4
+  la $a0, nl       Affiche un string, qui est un retour a la ligne
+  syscall
+
+  jr $ra           retourne à la derniere adresse enregistré 
+
+
+
+  main:
+  li $t2, 3       Met la valeur 3 dans le registre temporaire 2 (t2)
+loop:
+  beq $t2, $0, end_loop     Va à "end_loop" si les deux arguments sont egaux 
+  addi $t2, $t2, -1         Decrementation de t2 de -1 
+  jal add_user_num          Appel la fonction add_user_num
+  b loop                    retourne a l'etiqette loop 
+end_loop:
+  li $v0, 10                Appel systeme pour exit le programme 
+  syscall
+
+Ce programme va donc effectuer trois additions où l'utilisateur va devoir entrer deux valeurs 
+à chaque tour. 
+
